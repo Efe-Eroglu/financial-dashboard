@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import "../styles/login.css";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/authService";
+import { showErrorToast, showSuccessToast } from "../utils/notification";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -14,13 +14,13 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
     try {
       await login(email, password);
+      showSuccessToast("Giriş Başarılı!");
       navigate("/dashboard");
     } catch (err) {
-      setError(err.message || "Login failed");
+      showErrorToast("Giriş Başarısız!");
     } finally {
       setLoading(false);
     }
@@ -31,7 +31,6 @@ const Login = () => {
       <div className="login-box">
         <h1 className="login-title">Finansal Dashboard</h1>
         <p className="login-subtitle">Gelişmiş Takip, Basit Yönetim</p>
-        {error && <p className="login-error">{error}</p>}
         <form className="login-form" onSubmit={handleLogin}>
           <div className="form-group">
             <label htmlFor="email">Email</label>

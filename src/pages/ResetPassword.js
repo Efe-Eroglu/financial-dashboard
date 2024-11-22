@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { resetPassword } from "../services/authService";
 import "../styles/resetPassword.css";
+import { showErrorToast, showSuccessToast } from "../utils/notification";
 
 const ResetPassword = () => {
   const [formData, setFormData] = useState({
@@ -27,12 +28,12 @@ const ResetPassword = () => {
 
     try {
       const response = await resetPassword(formData);
-      setMessage(response.message);
+      showSuccessToast("Şifreniz Başarıyla Yenilendi!")
       setTimeout(() => {
         navigate("/");
       }, 3000);
     } catch (err) {
-      setError(err.error || "Failed to reset password");
+      showErrorToast("Şifre Yenilenirken Bir Hata Oluştu!")
     } finally {
       setLoading(false);
     }
