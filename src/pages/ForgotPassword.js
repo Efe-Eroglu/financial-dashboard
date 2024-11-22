@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { requestPasswordReset } from "../services/authService";
 import "../styles/forgotPassword.css";
+import { showErrorToast, showSuccessToast } from "../utils/notification";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -18,12 +19,12 @@ const ForgotPassword = () => {
 
     try {
       const response = await requestPasswordReset(email);
-      setMessage(response.message);
+      showSuccessToast("Kod gönderildi!")
       setTimeout(() => {
         navigate("/reset-password");
       }, 3000);
     } catch (err) {
-      setError(err.error || "Failed to process request");
+      showErrorToast("Kod Gönderilemedi!")
     } finally {
       setLoading(false);
     }
