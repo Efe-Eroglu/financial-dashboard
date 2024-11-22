@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import NotFound from "./pages/NotFound";
 
 
 const App = () => {
@@ -16,7 +17,7 @@ const App = () => {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="*"
-          element={<h1 style={{ textAlign: "center" }}>404: Page Not Found</h1>}
+          element={<NotFound />}
         />
       </Routes>
     </Router>
