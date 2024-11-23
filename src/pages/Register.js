@@ -28,7 +28,7 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const response = await register(formData);
+      await register(formData);
       showSuccessToast("Kayıt İşlemi Başarılı!")
       setTimeout(() => {
         navigate("/");
