@@ -27,7 +27,7 @@ const ResetPassword = () => {
     setLoading(true);
 
     try {
-      const response = await resetPassword(formData);
+      await resetPassword(formData);
       showSuccessToast("Şifreniz Başarıyla Yenilendi!")
       setTimeout(() => {
         navigate("/");

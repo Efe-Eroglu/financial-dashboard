@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "../styles/login.css";
 import { useNavigate } from "react-router-dom";
-import { login } from "../services/authService";
+import { login as apiLogin } from "../services/authService"; 
 import { showErrorToast, showSuccessToast } from "../utils/notification";
+import { useAuth } from "../state/context/AuthContext"; 
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,17 +11,19 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { login: contextLogin } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      await login(email, password);
+      const { token } = await apiLogin(email, password);
+      contextLogin(token);
       showSuccessToast("Giriş Başarılı!");
       navigate("/dashboard");
     } catch (err) {
-      showErrorToast("Giriş Başarısız!");
+      showErrorToast(err.message || "Giriş Başarısız!");
     } finally {
       setLoading(false);
     }

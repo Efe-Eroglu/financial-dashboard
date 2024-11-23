@@ -5,12 +5,22 @@ export const login = async (email, password) => {
   try {
     const response = await apiClient.post("/auth/login", { email, password });
     const { token } = response.data;
+
+    if (!token) {
+      throw new Error("Token not found in response");
+    }
+
     setToken(token);
     return response.data;
   } catch (error) {
-    throw error.response?.data || { message: "An error occurred during login" };
+    const errorMessage =
+      error.response?.data?.error || 
+      error.response?.data?.message || 
+      "An error occurred during login";
+    throw new Error(errorMessage);
   }
 };
+
 
 export const logout = (username, email, password) => {
   removeToken();
@@ -25,7 +35,9 @@ export const register = async (formData) => {
     });
     return response.data;
   } catch (error) {
-    throw error.response?.data || { error: "An error occurred during registration" };
+    throw (
+      error.response?.data || { error: "An error occurred during registration" }
+    );
   }
 };
 
@@ -50,4 +62,3 @@ export const resetPassword = async (formData) => {
     throw error.response?.data || { error: "Failed to reset password" };
   }
 };
-

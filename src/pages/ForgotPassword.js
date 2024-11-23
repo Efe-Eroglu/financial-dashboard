@@ -18,7 +18,7 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-      const response = await requestPasswordReset(email);
+      await requestPasswordReset(email);
       showSuccessToast("Kod gönderildi!")
       setTimeout(() => {
         navigate("/reset-password");
