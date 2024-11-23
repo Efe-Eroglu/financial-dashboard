@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "../styles/login.css";
 import { useNavigate } from "react-router-dom";
-import { login as apiLogin } from "../services/authService"; 
+import { login as apiLogin } from "../services/authService";
 import { showErrorToast, showSuccessToast } from "../utils/notification";
-import { useAuth } from "../state/context/AuthContext"; 
+import { useAuth } from "../state/context/AuthContext";
+import { fetchWatchlist } from "../services/watchlistService";
+import { startWebSocket } from "../services/authService";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -21,9 +23,22 @@ const Login = () => {
       const { token } = await apiLogin(email, password);
       contextLogin(token);
       showSuccessToast("Giriş Başarılı!");
+      try {
+        const watchlist = await fetchWatchlist(); 
+        if (watchlist.length > 0) {
+          await startWebSocket();
+          console.log("WebSocket connections successfully started.");
+        } else {
+          console.log(
+            "WebSocket connections not started because watchlist is empty."
+          );
+        }
+      } catch (watchlistError) {
+        console.error("Failed to fetch watchlist:", watchlistError.message);
+      }
       navigate("/dashboard");
     } catch (err) {
-      showErrorToast(err.message || "Giriş Başarısız!");
+      showErrorToast("Giriş Başarısız!");
     } finally {
       setLoading(false);
     }
