@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 import { setToken, removeToken, isAuthenticated as checkAuth } from "../../services/authHelper";
+import { showInfoToast } from "../../utils/notification";
 
 const AuthContext = createContext();
 
@@ -14,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     removeToken();
     setIsAuthenticated(false);
+    showInfoToast("Çıkış İşlemi Başarılı!")
   };
 
   return (

@@ -1,0 +1,19 @@
+.news-list {
+  list-style: none;
+  padding: 0;
+}
+
+.news-item {
+  margin-bottom: 15px;
+}
+
+.news-item h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.news-item p {
+  margin: 0;
+  color: gray;
+  font-size: 0.8rem;
+}
