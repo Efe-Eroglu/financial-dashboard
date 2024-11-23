@@ -62,3 +62,15 @@ export const resetPassword = async (formData) => {
     throw error.response?.data || { error: "Failed to reset password" };
   }
 };
+
+
+export const startWebSocket = async () => {
+  try {
+    const response = await apiClient.post("/websocket/start");
+    console.log("WebSocket connections started:", response.data.message);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to start WebSocket:", error.response?.data || error.message);
+    throw error;
+  }
+};

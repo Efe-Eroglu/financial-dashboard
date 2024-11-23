@@ -34,7 +34,7 @@ const Register = () => {
         navigate("/");
       }, 1000);
     } catch (err) {
-      showErrorToast("KAyıt İşlemi Başarırısız!")
+      showErrorToast("Kayıt İşlemi Başarırısız!")
     } finally {
       setLoading(false);
     }

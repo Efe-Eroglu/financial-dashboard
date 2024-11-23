@@ -1,46 +1,27 @@
-import React, { useEffect, useState } from "react";
-import "../styles/dashboard.css";
-import { fetchWatchlist, fetchNews } from "../services/dashboardService";
+import React, { useState, useEffect } from "react";
 import Heatmap from "../components/Heatmap";
-import NewsList from "../components/NewsList";
+import apiClient from "../services/apiClient";
 
 const Dashboard = () => {
   const [watchlist, setWatchlist] = useState([]);
-  const [news, setNews] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchWatchlist = async () => {
       try {
-        const watchlistData = await fetchWatchlist();
-        setWatchlist(watchlistData);
-
-        const newsData = await fetchNews();
-        setNews(newsData);
+        const response = await apiClient.get("/watchlist");
+        setWatchlist(response.data);
       } catch (error) {
-        console.error("Failed to load dashboard data:", error.message);
+        console.error("Error fetching watchlist:", error.message);
       }
     };
 
-    fetchData();
+    fetchWatchlist();
   }, []);
 
   return (
-    <div className="dashboard-container">
-      <header className="dashboard-header">
-        <h1>Dashboard</h1>
-      </header>
-
-      <main className="dashboard-main">
-        <section className="dashboard-heatmap">
-          <h2>İzleme Listesi</h2>
-          <Heatmap data={watchlist} />
-        </section>
-
-        <section className="dashboard-news">
-          <h2>İlgili Haberler</h2>
-          <NewsList news={news} />
-        </section>
-      </main>
+    <div>
+      <h1>Heatmap</h1>
+      <Heatmap data={watchlist} />
     </div>
   );
 };
