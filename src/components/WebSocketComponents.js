@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { startWebSocket, stopWebSocket } from "../services/websocketService";
 import Heatmap from "./Heatmap";
-import { showErrorToast } from "../utils/notification"; // Hata bildirimleri için
+import { showErrorToast } from "../utils/notification";
 
 const WebSocketComponent = ({ symbols }) => {
   const [tickerData, setTickerData] = useState({});
@@ -14,10 +14,18 @@ const WebSocketComponent = ({ symbols }) => {
             const updatedData = message.data.reduce((acc, item) => {
               acc[item.instId] = {
                 stock_symbol: item.instId,
-                volume: parseFloat(item.vol24h),
+                LastPrice: parseFloat(item.last || 0),
+                High24h: parseFloat(item.high24h || 0),
+                Low24h: parseFloat(item.low24h || 0),
+                volume: parseFloat(item.vol24h || 0),
+                change:
+                  item.low24h > 0
+                    ? ((item.last - item.low24h) / item.low24h) * 100
+                    : 0,
               };
               return acc;
             }, {});
+
             setTickerData((prevData) => ({
               ...prevData,
               ...updatedData,
@@ -31,7 +39,7 @@ const WebSocketComponent = ({ symbols }) => {
     }
 
     return () => {
-      stopWebSocket();
+      stopWebSocket(); 
     };
   }, [symbols]);
 

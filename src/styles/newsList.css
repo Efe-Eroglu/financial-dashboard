@@ -1,19 +1,38 @@
 .news-list {
   list-style: none;
   padding: 0;
+  margin: 0;
+  color: #333333; /* Daha koyu yazı rengi */
 }
 
 .news-item {
   margin-bottom: 15px;
+  padding: 10px;
+  border-bottom: 1px solid #dddddd;
+  transition: all 0.2s ease-in-out;
+}
+
+.news-item:hover {
+  background-color: #f4f6f8;
 }
 
 .news-item h3 {
   margin: 0;
   font-size: 1rem;
+  color: #1565c0;
+  text-decoration: none;
 }
 
 .news-item p {
-  margin: 0;
-  color: gray;
+  margin: 5px 0 0;
   font-size: 0.8rem;
+  color: #555555; /* Daha koyu gri */
+}
+
+.news-item a {
+  text-decoration: none;
+}
+
+.news-item a:hover h3 {
+  text-decoration: underline;
 }
