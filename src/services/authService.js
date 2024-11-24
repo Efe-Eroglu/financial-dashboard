@@ -1,5 +1,7 @@
+import { showInfoToast } from "../utils/notification";
 import apiClient from "./apiClient";
 import { setToken, removeToken } from "./authHelper";
+import { stopWebSocket } from "./websocketService";
 
 export const login = async (email, password) => {
   try {
@@ -14,17 +16,26 @@ export const login = async (email, password) => {
     return response.data;
   } catch (error) {
     const errorMessage =
-      error.response?.data?.error || 
-      error.response?.data?.message || 
+      error.response?.data?.error ||
+      error.response?.data?.message ||
       "An error occurred during login";
     throw new Error(errorMessage);
   }
 };
 
-
-export const logout = (username, email, password) => {
-  removeToken();
+export const logout = async () => {
+  try {
+    await apiClient.post("/auth/logout"); // Backend logout isteği
+    stopWebSocket(); // WebSocket bağlantısını kapat
+    removeToken(); // Token'i kaldır
+    console.log("Kullanıcı çıkışı tamamlandı.");
+  } catch (error) {
+    console.error("Logout işleminde hata:", error.message);
+    throw error; // Hata durumunda üst katmana bildir
+  }
 };
+
+
 
 export const register = async (formData) => {
   try {
@@ -63,14 +74,16 @@ export const resetPassword = async (formData) => {
   }
 };
 
-
 export const startWebSocket = async () => {
   try {
     const response = await apiClient.post("/websocket/start");
     console.log("WebSocket connections started:", response.data.message);
     return response.data;
   } catch (error) {
-    console.error("Failed to start WebSocket:", error.response?.data || error.message);
+    console.error(
+      "Failed to start WebSocket:",
+      error.response?.data || error.message
+    );
     throw error;
   }
 };
