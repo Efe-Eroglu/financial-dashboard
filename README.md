@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# <p align="center">PulseFin || Financial Dashboard </p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br>
 
-## Available Scripts
 
-In the project directory, you can run:
+## Proje Amacı
+* Bu proje, kullanıcıların kripto para piyasalarındaki güncel fiyat değişimlerini, işlem hacimlerini ve piyasa trendlerini görselleştirmelerine olanak tanıyan bir Financial Dashboard uygulamasının frontend kısmıdır. Ayrıca, piyasaya dair önemli haberleri kullanıcı dostu bir arayüzle sunarak bilgilendirme sağlar.
 
-### `npm start`
+<br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Proje Hedefleri
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1) Kişiselleştirilmiş Takip: Kullanıcıların izleme listesine kendi belirledikleri kripto paraları ekleyebilmesi.
+2) Gerçek Zamanlı Veri: İzleme listesindeki kripto paraların fiyatlarını, günlük değişimlerini ve işlem hacimlerini WebSocket ile gerçek zamanlı olarak sunmak.
+3) Bilgilendirme: Kripto paralara dair önemli haberleri modern ve erişilebilir bir arayüzle kullanıcılara sunmak.
+4) Gelecekteki Genişletme: Kullanıcıların cüzdanlarını bağlayarak gelir-gider dengesini ve yatırım performanslarını analiz edebilecekleri bir yapı oluşturmak.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br>
 
-### `npm run build`
+## Projenin Özellikleri
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**1. Heatmap Görselleştirmesi**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- İzleme listesine eklenen kripto paraların fiyat ve hacim verileri renk kodlu bir heatmap üzerinde görselleştirilir.
+- Heatmap, kullanıcıya yatırım portföyündeki varlıkların performansını hızlı ve görsel bir şekilde analiz etme imkânı sunar.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Her hücrede şu bilgiler gösterilir:
+`Kripto para adı (ör. BTC-USDT)`
+`Son fiyat`
+`Günlük hacim`
+`Günlük değişim yüzdesi`
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+<br>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+**2. Haber Listesi**
+- Kripto paralarla ilgili güncel ve önemli haberleri kullanıcıya sunar.
+- Haber başlıklarına tıklanarak detaylı bilgiye ulaşılabilir.
+- Kullanıcılar, izledikleri varlıklarla ilgili gelişmeleri takip ederek daha bilinçli kararlar alabilir.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<br>
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**3. İzleme Listesi Yönetimi**
+- Kullanıcılar, kendi belirledikleri kripto paraları izleme listesine ekleyebilir veya çıkarabilir.
+- İzleme listesindeki varlıkların fiyatları ve değişimleri gerçek zamanlı olarak güncellenir.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<br>
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**4. Cüzdan Entegrasyonu (Gelecekte Eklenecek)**
+- Kullanıcılar, kripto para cüzdanlarını uygulamaya bağlayarak gelir-gider dengesini ve yatırım performanslarını görebilecekler.
+- Bu özellik, kullanıcının tüm finansal durumunu tek bir ekranda yönetmesine olanak tanıyacak.
 
-### Analyzing the Bundle Size
+<br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Kulanım Kılavuzu
 
-### Making a Progressive Web App
+### **Projeyi Çalıştırma**
+1. **Bağımlılıkları Yükleme :**
+   ```bash
+    npm install
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+2. **Çevresel Değişkenleri Ayarlama :**
+   ```bash
+    REACT_APP_API_BASE_URL= YOUR_BASE_URL
+    REACT_APP_API_TIMEOUT=10000
+   ```
+3. **Uygulamayı Başlatma**
+   ```bash
+    npm start
+   ```
+   
+4. **Backend Bağımlılığı**
+* Bu frontend uygulaması, kripto para fiyatlarını ve haberleri sağlamak için bir backend uygulamasına ihtiyaç duyar. Backend projesinin kaynak koduna ve kurulum talimatlarına aşağıdaki bağlantıdan ulaşabilirsiniz:
 
-### Advanced Configuration
+* [Backend GitHub Deposu](https://github.com/Efe-Eroglu/financial-dashboard-backend.git)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+<br>
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Katkıda Bulunma
+* Projede bir hata bulursanız veya bir geliştirme için pull request açabilirsizin.
