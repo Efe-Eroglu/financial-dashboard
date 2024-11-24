@@ -1,27 +1,48 @@
-import React, { useState, useEffect } from "react";
-import Heatmap from "../components/Heatmap";
-import apiClient from "../services/apiClient";
+import React, { useEffect, useState } from "react";
+import WebSocketComponent from "../components/WebSocketComponents";
+import { fetchWatchlist } from "../services/watchlistService";
+import { logout } from "../services/authService";
+import "../styles/dashboard.css";
+import { showErrorToast, showInfoToast } from "../utils/notification";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const [watchlist, setWatchlist] = useState([]);
+  const [symbols, setSymbols] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchWatchlist = async () => {
+    const fetchSymbols = async () => {
       try {
-        const response = await apiClient.get("/watchlist");
-        setWatchlist(response.data);
+        const watchlist = await fetchWatchlist();
+        setSymbols(watchlist);
       } catch (error) {
         console.error("Error fetching watchlist:", error.message);
       }
     };
 
-    fetchWatchlist();
+    fetchSymbols();
   }, []);
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+      showInfoToast("Çıkış Yapıldı");
+      window.location.href = "/"
+    } catch (error) {
+      console.error("Logout işlemi başarısız:", error.message);
+      showErrorToast("Çıkış sırasında bir hata oluştu.");
+    }
+  };
+  
+
   return (
-    <div>
-      <h1>Heatmap</h1>
-      <Heatmap data={watchlist} />
+    <div className="dashboard-container">
+      <div className="heatmap-section">
+        <WebSocketComponent symbols={symbols} />
+      </div>
+      <button className="logout-button" onClick={handleLogout}>
+        Logout
+      </button>
     </div>
   );
 };
