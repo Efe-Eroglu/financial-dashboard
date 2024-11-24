@@ -7,50 +7,48 @@ const Heatmap = ({ data }) => {
   useEffect(() => {
     if (!data || data.length === 0) return;
 
-    const width = 1200; // Heatmap genişliği
-    const height = 800; // Heatmap yüksekliği
+    const width = 1600; // Heatmap genişliği
+    const height = 1000; // Heatmap yüksekliği
 
-    console.log("Gelen Data:", data);
-
-    // Günlük değişimi hesapla ve `change` değerine ekle
+    // Veriyi hazırlama
     const preparedData = data.map((item) => {
       const lastPrice = parseFloat(item.LastPrice) || 0;
-      const low24h = parseFloat(item.Low24h) || 1; // Bölme hatasını önlemek için varsayılan 1
-      const change = ((lastPrice - low24h) / low24h) * 100; // Günlük değişim yüzdesi
-      console.log("Change Hesaplama:", {
-        stock_symbol: item.stock_symbol,
-        LastPrice: lastPrice,
-        Low24h: low24h,
-        change,
-      });
+      const low24h = parseFloat(item.Low24h) || 1;
+      const change = ((lastPrice - low24h) / low24h) * 100;
+
       return {
         ...item,
-        change, // Günlük değişim yüzdesi
+        change,
       };
     });
 
-    console.log("Hazırlanan Veri:", preparedData);
+    console.log("Hazırlanan Data:", preparedData);
 
+    // Treemap root oluşturma
     const root = d3
       .hierarchy({ children: preparedData })
-      .sum((d) => d.volume)
+      .sum(() => 1) // Her öğeye eşit değer ata
       .sort((a, b) => b.value - a.value);
 
+    console.log("Treemap Root:", root.leaves());
+
+    // Treemap layout ayarları
     const treemapLayout = d3
       .treemap()
       .size([width, height])
-      .padding(5);
+      .paddingInner(5); // Kutular arasında boşluk
     treemapLayout(root);
 
     const svg = d3.select(svgRef.current);
-    svg.selectAll("*").remove();
+    svg.selectAll("*").remove(); // Önceki içeriği temizle
 
     // Renk skalası
     const colorScale = d3
       .scaleLinear()
-      .domain([-10, 0, 10]) // Negatif, nötr, pozitif değişimler
+      .domain([-10, 0, 10])
       .range(["#e57373", "#ffffff", "#81c784"]);
 
+    // Kutuları oluşturma
     const nodes = svg
       .selectAll("g")
       .data(root.leaves())
@@ -58,11 +56,10 @@ const Heatmap = ({ data }) => {
       .append("g")
       .attr("transform", (d) => `translate(${d.x0}, ${d.y0})`);
 
-    // Hücreler
     nodes
       .append("rect")
-      .attr("width", (d) => d.x1 - d.x0)
-      .attr("height", (d) => d.y1 - d.y0)
+      .attr("width", (d) => Math.max(0, d.x1 - d.x0)) // Negatif genişliği önlemek
+      .attr("height", (d) => Math.max(0, d.y1 - d.y0)) // Negatif yüksekliği önlemek
       .attr("fill", (d) => colorScale(d.data.change))
       .attr("stroke", "white")
       .attr("rx", 10)
@@ -72,12 +69,22 @@ const Heatmap = ({ data }) => {
     nodes
       .append("text")
       .attr("x", (d) => (d.x1 - d.x0) / 2)
-      .attr("y", (d) => (d.y1 - d.y0) / 2 - 20)
+      .attr("y", (d) => (d.y1 - d.y0) / 2 - 40)
       .attr("text-anchor", "middle")
       .attr("fill", "#000000")
       .style("font-size", "16px")
       .style("font-weight", "bold")
       .text((d) => d.data.stock_symbol);
+
+    // Son fiyat
+    nodes
+      .append("text")
+      .attr("x", (d) => (d.x1 - d.x0) / 2)
+      .attr("y", (d) => (d.y1 - d.y0) / 2 - 20)
+      .attr("text-anchor", "middle")
+      .attr("fill", "#000000")
+      .style("font-size", "14px")
+      .text((d) => `Last: ${d.data.LastPrice.toFixed(2)}`);
 
     // Hisse hacmi
     nodes

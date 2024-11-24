@@ -1,38 +1,83 @@
+/* Ana konteyner */
+.news-container {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-height: 600px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #cccccc #f4f4f4;
+}
+
+/* Haber listesi */
 .news-list {
   list-style: none;
   padding: 0;
   margin: 0;
-  color: #333333; /* Daha koyu yazı rengi */
 }
 
+/* Haber maddesi */
 .news-item {
   margin-bottom: 15px;
-  padding: 10px;
-  border-bottom: 1px solid #dddddd;
-  transition: all 0.2s ease-in-out;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .news-item:hover {
-  background-color: #f4f6f8;
+  background-color: #e3f2fd;
+  transform: scale(1.02);
 }
 
+/* Haber başlığı */
 .news-item h3 {
   margin: 0;
   font-size: 1rem;
-  color: #1565c0;
-  text-decoration: none;
+  color: #1e88e5;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
+/* Kaynak */
 .news-item p {
-  margin: 5px 0 0;
-  font-size: 0.8rem;
-  color: #555555; /* Daha koyu gri */
+  margin: 10px 0 0;
+  font-size: 0.85rem;
+  color: #555555;
 }
 
+/* Bağlantı */
 .news-item a {
   text-decoration: none;
+  display: block;
 }
 
 .news-item a:hover h3 {
   text-decoration: underline;
+}
+
+/* No News Message */
+.no-news {
+  font-size: 1rem;
+  color: #666666;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Scrollbar */
+.news-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.news-container::-webkit-scrollbar-thumb {
+  background: #cccccc;
+  border-radius: 8px;
+}
+
+.news-container::-webkit-scrollbar-track {
+  background: #f4f4f4;
 }
