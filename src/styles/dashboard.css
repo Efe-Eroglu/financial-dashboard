@@ -1,28 +1,38 @@
-/* Ana kapsayıcı */
 .dashboard-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Tam ekran yüksekliği */
-  background-color: #f4f6f8; /* Hafif gri arka plan */
+  height: 100vh;
+  background-color: #f4f6f8;
   margin: 0;
   padding: 0;
 }
 
-/* Heatmap bölgesi */
 .heatmap-section {
-  width: 90%; /* Ekran genişliğinin %90'ı */
-  height: 90%; /* Ekran yüksekliğinin %90'ı */
-  background: linear-gradient(145deg, #ffffff, #e8e8e8); /* Hafif degrade arka plan */
-  border-radius: 16px; /* Köşeleri yuvarla */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+  flex: 4; /* %80 genişlik */
+  height: 100%;
+  background: linear-gradient(145deg, #f4f4f4, #e0e0e0); /* Daha açık bir arka plan */
+  border-right: 2px solid #cccccc;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
 }
 
-/* Logout butonu */
+.news-section {
+  flex: 1; /* %20 genişlik */
+  height: 100%;
+  overflow-y: auto;
+  background-color: #ffffff;
+  padding: 20px;
+  box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.1);
+  color: #333333; /* Yazıların daha görünür olması için koyu renk */
+}
+
+.news-title {
+  margin: 0 0 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #222222;
+}
+
 .logout-button {
   position: fixed;
   bottom: 20px;
@@ -43,4 +53,3 @@
   background-color: #e64a19;
   transform: scale(1.05);
 }
-
